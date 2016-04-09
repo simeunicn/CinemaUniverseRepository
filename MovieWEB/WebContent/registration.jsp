@@ -5,15 +5,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Welcome</title>
+<title>Registration</title>
 </head>
 <body>
-	<form action="LoginServlet" method="post">
+	<form action="RegisterServlet" method="post">
 		Username: <input type="text" name="username"/> </br>
-		Password: <input type="password" name="password"/> </br> </br>
-		<input type="submit" name="login" value="Login" style="width: 220px; "/> </br>
+		Password: <input type="password" name="password"/> </br>
+		Ime: <input type="text" name="ime"/> </br>
+		Prezime: <input type="text" name="prezime"/> </br>
+		Email: <input type="text" name="email"/> </br> </br>
 		<input type="submit" name="register" value="Register" style="width: 220px; "/> </br>
-		<input type="submit" name="continue" value="Continue as unregistered visitor" style="width: 220px; "/> </br>
+		<input type="submit" name="cancel" value="Cancel" style="width: 220px; "/> </br>
 	</form>
+
 </body>
 </html>

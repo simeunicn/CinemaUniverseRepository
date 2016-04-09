@@ -27,10 +27,6 @@ public class Film implements Serializable {
 
 	private String trailer;
 
-	//bi-directional many-to-many association to Glumac
-	@ManyToMany(mappedBy="tim8films")
-	private List<Glumac> tim8glumacs;
-
 	//bi-directional many-to-many association to Kategorija
 	@ManyToMany
 	@JoinTable(
@@ -43,6 +39,10 @@ public class Film implements Serializable {
 			}
 		)
 	private List<Kategorija> tim8kategorijas;
+
+	//bi-directional many-to-many association to Glumac
+	@ManyToMany(mappedBy="tim8films")
+	private List<Glumac> tim8glumacs;
 
 	//bi-directional many-to-one association to Komentar
 	@OneToMany(mappedBy="tim8film")
@@ -95,20 +95,20 @@ public class Film implements Serializable {
 		this.trailer = trailer;
 	}
 
-	public List<Glumac> getTim8glumacs() {
-		return this.tim8glumacs;
-	}
-
-	public void setTim8glumacs(List<Glumac> tim8glumacs) {
-		this.tim8glumacs = tim8glumacs;
-	}
-
 	public List<Kategorija> getTim8kategorijas() {
 		return this.tim8kategorijas;
 	}
 
 	public void setTim8kategorijas(List<Kategorija> tim8kategorijas) {
 		this.tim8kategorijas = tim8kategorijas;
+	}
+
+	public List<Glumac> getTim8glumacs() {
+		return this.tim8glumacs;
+	}
+
+	public void setTim8glumacs(List<Glumac> tim8glumacs) {
+		this.tim8glumacs = tim8glumacs;
 	}
 
 	public List<Komentar> getTim8komentars() {

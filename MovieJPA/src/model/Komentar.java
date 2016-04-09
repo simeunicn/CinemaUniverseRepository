@@ -24,15 +24,15 @@ public class Komentar implements Serializable {
 
 	private String textKomentara;
 
-	//bi-directional many-to-one association to Korisnik
-	@ManyToOne
-	@JoinColumn(name="KorisnikID")
-	private Korisnik tim8korisnik;
-
 	//bi-directional many-to-one association to Film
 	@ManyToOne
 	@JoinColumn(name="FilmID")
 	private Film tim8film;
+
+	//bi-directional many-to-one association to Korisnik
+	@ManyToOne
+	@JoinColumn(name="KorisnikID")
+	private Korisnik tim8korisnik;
 
 	public Komentar() {
 	}
@@ -61,20 +61,20 @@ public class Komentar implements Serializable {
 		this.textKomentara = textKomentara;
 	}
 
-	public Korisnik getTim8korisnik() {
-		return this.tim8korisnik;
-	}
-
-	public void setTim8korisnik(Korisnik tim8korisnik) {
-		this.tim8korisnik = tim8korisnik;
-	}
-
 	public Film getTim8film() {
 		return this.tim8film;
 	}
 
 	public void setTim8film(Film tim8film) {
 		this.tim8film = tim8film;
+	}
+
+	public Korisnik getTim8korisnik() {
+		return this.tim8korisnik;
+	}
+
+	public void setTim8korisnik(Korisnik tim8korisnik) {
+		this.tim8korisnik = tim8korisnik;
 	}
 
 }
