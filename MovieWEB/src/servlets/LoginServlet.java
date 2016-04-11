@@ -45,15 +45,21 @@ public class LoginServlet extends HttpServlet {
 			if(username.equals("") || password.equals("")){
 				request.getRequestDispatcher("/index.jsp").forward(request, response);
 			}else{
-				if(bean.login(username, password)){
+				String uloga = bean.login(username, password);
+				if(uloga.equals("nije-registrovan")){
+					request.getRequestDispatcher("/index.jsp").forward(request, response);
+				}else if (uloga.equals("korisnik")){
 					request.getRequestDispatcher("/site.jsp").forward(request, response);
-				}else{
+				}else if (uloga.equals("admin")){
+					request.getRequestDispatcher("/adminPage.jsp").forward(request, response);
+				} else {
 					request.getRequestDispatcher("/index.jsp").forward(request, response);
 				}
 			}
 		}else if(request.getParameter("register")!=null){
 			request.getRequestDispatcher("/registration.jsp").forward(request, response);
 		}else if(request.getParameter("continue")!=null){
+			bean.justContinue();
 			request.getRequestDispatcher("/site.jsp").forward(request, response);
 		}else{
 			request.getRequestDispatcher("/index.jsp").forward(request, response);

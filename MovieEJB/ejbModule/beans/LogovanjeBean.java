@@ -24,8 +24,7 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean login(String username, String password) {
-
+	public String login(String username, String password) {
 		TypedQuery<Korisnik> tq = em.createQuery(
 				"select k from Korisnik k where k.username = :u and k.password = :p", Korisnik.class);
 		tq.setParameter("u", username);
@@ -33,11 +32,12 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 
 		try {
 			loggedUser = tq.getSingleResult();
-			return true;
+			String uloga = loggedUser.getUloga();
+			return uloga;
 		} catch (Exception e) {
 			loggedUser = null;
 			e.printStackTrace();
-			return false;
+			return "nije-registrovan";
 		}
 	}
 	
@@ -57,6 +57,22 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public void justContinue(){
+		loggedUser = null;
+	}
+	
+	public void logout(){
+		loggedUser = null;
+	}
+
+	public Korisnik getLoggedUser() {
+		return loggedUser;
+	}
+
+	public void setLoggedUser(Korisnik loggedUser) {
+		this.loggedUser = loggedUser;
 	}
 
 }
