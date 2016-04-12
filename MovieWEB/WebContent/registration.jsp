@@ -13,6 +13,7 @@
 </head>
 <body>
 	<form action="RegisterServlet" method="post">
+	<br /><br /><br /><br />
 	<div align="center" >
 		<div class="form-group">
     		<label for="exampleInputEmail1">Username</label>

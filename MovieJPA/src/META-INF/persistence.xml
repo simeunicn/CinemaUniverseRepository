@@ -4,7 +4,6 @@
 		<jta-data-source>java:jboss/datasources/mysql</jta-data-source>
 		<class>model.Film</class>
 		<class>model.Glumac</class>
-		<class>model.Kategorija</class>
 		<class>model.Komentar</class>
 		<class>model.Korisnik</class>
 		<class>model.Projekcija</class>

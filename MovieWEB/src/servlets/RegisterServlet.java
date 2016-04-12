@@ -51,6 +51,8 @@ public class RegisterServlet extends HttpServlet {
 				request.getRequestDispatcher("/registration.jsp").forward(request, response);
 			}else{
 				if(bean.registracija(email, ime, password, prezime, uloga, username)){
+					request.getSession().setAttribute("LGbean", bean);
+					request.getSession().setAttribute("nazivKomponente", "Logout");
 					request.getRequestDispatcher("/site.jsp").forward(request, response);
 				}else{
 					request.getRequestDispatcher("/registration.jsp").forward(request, response);

@@ -49,6 +49,8 @@ public class LoginServlet extends HttpServlet {
 				if(uloga.equals("nije-registrovan")){
 					request.getRequestDispatcher("/index.jsp").forward(request, response);
 				}else if (uloga.equals("korisnik")){
+					request.getSession().setAttribute("LGbean", bean);
+					request.getSession().setAttribute("nazivKomponente", "Logout");
 					request.getRequestDispatcher("/site.jsp").forward(request, response);
 				}else if (uloga.equals("admin")){
 					request.getRequestDispatcher("/adminPage.jsp").forward(request, response);
@@ -60,6 +62,8 @@ public class LoginServlet extends HttpServlet {
 			request.getRequestDispatcher("/registration.jsp").forward(request, response);
 		}else if(request.getParameter("continue")!=null){
 			bean.justContinue();
+			request.getSession().setAttribute("LGbean", bean);
+			request.getSession().setAttribute("nazivKomponente", "Nazad");
 			request.getRequestDispatcher("/site.jsp").forward(request, response);
 		}else{
 			request.getRequestDispatcher("/index.jsp").forward(request, response);

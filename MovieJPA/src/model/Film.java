@@ -19,6 +19,8 @@ public class Film implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int filmID;
 
+	private String kategorija;
+
 	private String naziv;
 
 	private String opis;
@@ -27,21 +29,8 @@ public class Film implements Serializable {
 
 	private String trailer;
 
-	//bi-directional many-to-many association to Kategorija
-	@ManyToMany
-	@JoinTable(
-		name="TIM8KATEGORIJAFILM"
-		, joinColumns={
-			@JoinColumn(name="FilmID")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="KategorijaID")
-			}
-		)
-	private List<Kategorija> tim8kategorijas;
-
 	//bi-directional many-to-many association to Glumac
-	@ManyToMany(mappedBy="tim8films")
+	@ManyToMany(mappedBy="tim8films", fetch=FetchType.EAGER)
 	private List<Glumac> tim8glumacs;
 
 	//bi-directional many-to-one association to Komentar
@@ -61,6 +50,14 @@ public class Film implements Serializable {
 
 	public void setFilmID(int filmID) {
 		this.filmID = filmID;
+	}
+
+	public String getKategorija() {
+		return this.kategorija;
+	}
+
+	public void setKategorija(String kategorija) {
+		this.kategorija = kategorija;
 	}
 
 	public String getNaziv() {
@@ -93,14 +90,6 @@ public class Film implements Serializable {
 
 	public void setTrailer(String trailer) {
 		this.trailer = trailer;
-	}
-
-	public List<Kategorija> getTim8kategorijas() {
-		return this.tim8kategorijas;
-	}
-
-	public void setTim8kategorijas(List<Kategorija> tim8kategorijas) {
-		this.tim8kategorijas = tim8kategorijas;
 	}
 
 	public List<Glumac> getTim8glumacs() {

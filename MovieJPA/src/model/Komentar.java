@@ -2,7 +2,6 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
 
 
 /**
@@ -19,8 +18,7 @@ public class Komentar implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int komentarID;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date datumPostavljanja;
+	private String datumPostavljanja;
 
 	private String textKomentara;
 
@@ -45,11 +43,11 @@ public class Komentar implements Serializable {
 		this.komentarID = komentarID;
 	}
 
-	public Date getDatumPostavljanja() {
+	public String getDatumPostavljanja() {
 		return this.datumPostavljanja;
 	}
 
-	public void setDatumPostavljanja(Date datumPostavljanja) {
+	public void setDatumPostavljanja(String datumPostavljanja) {
 		this.datumPostavljanja = datumPostavljanja;
 	}
 

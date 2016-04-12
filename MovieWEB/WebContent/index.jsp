@@ -13,12 +13,13 @@
 </head>
 <body>
 	<form action="LoginServlet" method="post">
+	<br /><br /><br /><br /><br />
 		<div align="center" >
-			<div class="form-group" >
+			<div class="form-group" style="width: 300px;" >
     			<label class="sr-only" for="exampleInputEmail3">Username</label>
    				<input type="text" class="form-control" name="username" placeholder="Username"></input>
   			</div>
-		  	<div class="form-group" >
+		  	<div class="form-group" style="width: 300px;" >
 		    	<label class="sr-only" for="exampleInputPassword3">Password</label>
 		    	<input type="password" class="form-control" name="password" placeholder="Password"></input>
 		  	</div>

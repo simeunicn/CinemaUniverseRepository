@@ -2,7 +2,6 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
 
 
 /**
@@ -19,17 +18,20 @@ public class Projekcija implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int projekcijaID;
 
+	private int cena;
+
 	private int preostalaMesta;
 
 	private String sala;
 
+	private String tipProjekcije;
+
 	private int ukupanbrmesta;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date vreme;
+	private String vreme;
 
 	//bi-directional many-to-one association to Film
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="FilmID")
 	private Film tim8film;
 
@@ -42,6 +44,14 @@ public class Projekcija implements Serializable {
 
 	public void setProjekcijaID(int projekcijaID) {
 		this.projekcijaID = projekcijaID;
+	}
+
+	public int getCena() {
+		return this.cena;
+	}
+
+	public void setCena(int cena) {
+		this.cena = cena;
 	}
 
 	public int getPreostalaMesta() {
@@ -60,6 +70,14 @@ public class Projekcija implements Serializable {
 		this.sala = sala;
 	}
 
+	public String getTipProjekcije() {
+		return this.tipProjekcije;
+	}
+
+	public void setTipProjekcije(String tipProjekcije) {
+		this.tipProjekcije = tipProjekcije;
+	}
+
 	public int getUkupanbrmesta() {
 		return this.ukupanbrmesta;
 	}
@@ -68,11 +86,11 @@ public class Projekcija implements Serializable {
 		this.ukupanbrmesta = ukupanbrmesta;
 	}
 
-	public Date getVreme() {
+	public String getVreme() {
 		return this.vreme;
 	}
 
-	public void setVreme(Date vreme) {
+	public void setVreme(String vreme) {
 		this.vreme = vreme;
 	}
 
