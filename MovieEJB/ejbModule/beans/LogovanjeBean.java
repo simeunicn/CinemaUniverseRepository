@@ -10,8 +10,6 @@ import javax.ejb.Stateful;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -141,7 +139,6 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
  		}
 		Projekcija p = em.find(Projekcija.class, pk.getTim8projekcija().getProjekcijaID());
 		p.setProsecnaOcena(d);
-		System.out.println("Prosecxna ocena "+d);
 		UserTransaction ut = sc.getUserTransaction();
 		
 		try {
