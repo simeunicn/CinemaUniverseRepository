@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -22,6 +23,8 @@ public class Projekcija implements Serializable {
 
 	private int preostalaMesta;
 
+	private double prosecnaOcena;
+
 	private String sala;
 
 	private String tipProjekcije;
@@ -34,6 +37,10 @@ public class Projekcija implements Serializable {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="FilmID")
 	private Film tim8film;
+
+	//bi-directional many-to-one association to ProjekcijaKorisnik
+	@OneToMany(mappedBy="tim8projekcija",fetch=FetchType.EAGER)
+	private List<ProjekcijaKorisnik> tim8projekcijakorisniks;
 
 	public Projekcija() {
 	}
@@ -60,6 +67,14 @@ public class Projekcija implements Serializable {
 
 	public void setPreostalaMesta(int preostalaMesta) {
 		this.preostalaMesta = preostalaMesta;
+	}
+
+	public double getProsecnaOcena() {
+		return this.prosecnaOcena;
+	}
+
+	public void setProsecnaOcena(double prosecnaOcena) {
+		this.prosecnaOcena = prosecnaOcena;
 	}
 
 	public String getSala() {
@@ -100,6 +115,28 @@ public class Projekcija implements Serializable {
 
 	public void setTim8film(Film tim8film) {
 		this.tim8film = tim8film;
+	}
+
+	public List<ProjekcijaKorisnik> getTim8projekcijakorisniks() {
+		return this.tim8projekcijakorisniks;
+	}
+
+	public void setTim8projekcijakorisniks(List<ProjekcijaKorisnik> tim8projekcijakorisniks) {
+		this.tim8projekcijakorisniks = tim8projekcijakorisniks;
+	}
+
+	public ProjekcijaKorisnik addTim8projekcijakorisnik(ProjekcijaKorisnik tim8projekcijakorisnik) {
+		getTim8projekcijakorisniks().add(tim8projekcijakorisnik);
+		tim8projekcijakorisnik.setTim8projekcija(this);
+
+		return tim8projekcijakorisnik;
+	}
+
+	public ProjekcijaKorisnik removeTim8projekcijakorisnik(ProjekcijaKorisnik tim8projekcijakorisnik) {
+		getTim8projekcijakorisniks().remove(tim8projekcijakorisnik);
+		tim8projekcijakorisnik.setTim8projekcija(null);
+
+		return tim8projekcijakorisnik;
 	}
 
 }

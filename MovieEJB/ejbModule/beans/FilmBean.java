@@ -1,6 +1,9 @@
 package beans;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -9,6 +12,7 @@ import javax.enterprise.inject.Typed;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import model.Film;
 import model.Glumac;
@@ -34,6 +38,7 @@ public class FilmBean implements FilmBeanRemote {
         // TODO Auto-generated constructor stub
     }
     
+    
     public List<Film> pronadjiSveFilmove(){
     	List<Film> lista = em.createQuery("select f from Film f", Film.class).getResultList();
     	return lista;
@@ -56,7 +61,11 @@ public class FilmBean implements FilmBeanRemote {
     public Film dodajKomentar(String tekst, String datum,int idK, int idF){
     	Film f = em.find(Film.class, idF);
     	Komentar k = new Komentar();
-    	k.setDatumPostavljanja(datum);
+    	
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    	Date date = new Date();
+    	String dateS = dateFormat.format(date);
+    	k.setDatumPostavljanja(dateS);
     	k.setTextKomentara(tekst);
     	k.setTim8film(f);
     	k.setTim8korisnik(em.find(Korisnik.class, idK));
@@ -67,6 +76,13 @@ public class FilmBean implements FilmBeanRemote {
     	return f;
     	
     	
+    }
+    
+    public List<Film> pretragaPoKategoriji(String kat){
+    	TypedQuery<Film> q = em.createQuery("select f from Film f where f.kategorija LIKE :kat",Film.class);
+    	//System.out.println("BEAN KAT:"+kat);
+    	q.setParameter("kat", kat);
+    	return q.getResultList();
     }
 
 }

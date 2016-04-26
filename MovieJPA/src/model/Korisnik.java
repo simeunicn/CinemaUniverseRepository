@@ -35,6 +35,10 @@ public class Korisnik implements Serializable {
 	@OneToMany(mappedBy="tim8korisnik")
 	private List<Komentar> tim8komentars;
 
+	//bi-directional many-to-one association to ProjekcijaKorisnik
+	@OneToMany(mappedBy="tim8korisnik")
+	private List<ProjekcijaKorisnik> tim8projekcijakorisniks;
+
 	public Korisnik() {
 	}
 
@@ -114,6 +118,28 @@ public class Korisnik implements Serializable {
 		tim8komentar.setTim8korisnik(null);
 
 		return tim8komentar;
+	}
+
+	public List<ProjekcijaKorisnik> getTim8projekcijakorisniks() {
+		return this.tim8projekcijakorisniks;
+	}
+
+	public void setTim8projekcijakorisniks(List<ProjekcijaKorisnik> tim8projekcijakorisniks) {
+		this.tim8projekcijakorisniks = tim8projekcijakorisniks;
+	}
+
+	public ProjekcijaKorisnik addTim8projekcijakorisnik(ProjekcijaKorisnik tim8projekcijakorisnik) {
+		getTim8projekcijakorisniks().add(tim8projekcijakorisnik);
+		tim8projekcijakorisnik.setTim8korisnik(this);
+
+		return tim8projekcijakorisnik;
+	}
+
+	public ProjekcijaKorisnik removeTim8projekcijakorisnik(ProjekcijaKorisnik tim8projekcijakorisnik) {
+		getTim8projekcijakorisniks().remove(tim8projekcijakorisnik);
+		tim8projekcijakorisnik.setTim8korisnik(null);
+
+		return tim8projekcijakorisnik;
 	}
 
 }

@@ -97,9 +97,6 @@
 		          <div class="form-group">
 		            <label class="control-label">Text Komentara</label>
 		            <input type="text" class="form-control" name="textKomentara" placeholder="Text"></input>
-		          </div><div class="form-group">
-		            <label class="control-label">Datum i vreme</label>
-		            <input type="text" class="form-control" name="datumKomentara" placeholder="00/00/00-00:00"></input>
 		          </div>
 		          <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
