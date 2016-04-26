@@ -93,7 +93,6 @@
 	   		<td>
 	   			<fmt:parseNumber var="i" type="number" value="${p.prosecnaOcena}" />
 				<p><c:out value="${p.prosecnaOcena}"/></p>
-	   			
 	   		</td>
 	   		<td>
 	   			<input type="submit" class="btn btn-link" name="sacuvajO" value="Sacuvaj ocenu" style="width: 150;" /></br>
