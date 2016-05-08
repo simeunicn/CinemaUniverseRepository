@@ -172,7 +172,48 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 		tq.setParameter("par", pk.getTim8projekcija().getProjekcijaID());
 		return tq.getResultList().size();
 	}
-
+	
+	public boolean TryToInsertRezervacije(int num, int p, int k){
+		Projekcija proj = em.find(Projekcija.class, p);
+		Korisnik kor = em.find(Korisnik.class, k);
+		if(proj.getPreostalaMesta()>num){
+			return insertRezervacije(num,proj,kor);
+		}
+		return false;
+	}
+	
+	private boolean insertRezervacije(int num,Projekcija proj, Korisnik kor){
+		UserTransaction ut = sc.getUserTransaction();
+		try {
+			ut.begin();
+			Rezervacija rez[] = new Rezervacija[num];
+			for(int i = 0;i<num;i++){
+				rez[i] = new Rezervacija();
+				rez[i].setTim8korisnik(kor);
+				rez[i].setTim8projekcija(proj);
+				em.persist(rez[i]);
+			}
+			proj.setPreostalaMesta(proj.getPreostalaMesta()-num);
+			em.merge(proj);
+			ut.commit();
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			try {
+				ut.rollback();
+			} catch (IllegalStateException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SystemException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return false;
+		}
+	}
 	public void justContinue() {
 		loggedUser = null;
 	}

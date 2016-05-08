@@ -49,6 +49,7 @@
 				<th>Preostalo mesta</th>
 				<th>Ocena</th>
 				<th>Prosecna ocena</th>
+				<th>Broj karata za rezervaciju</th>
 				<th></th>
 				<th></th>
 				<th></th>
@@ -78,6 +79,9 @@
 	   		</td>
 	   		<td>
 	   			<c:out value="${p.preostalaMesta}"/>
+	   		</td>
+	   		<td>
+	   			<input type="text" name="brojkarata"/><input type="submit" class="btn btn-link" name="reserve" value="Rezervisi" style="width: 150;" /> 
 	   		</td>
 	   		<td>
 	   			<div class="btn-group" data-toggle="buttons">

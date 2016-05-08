@@ -42,6 +42,10 @@ public class Projekcija implements Serializable {
 	@OneToMany(mappedBy="tim8projekcija")
 	private List<ProjekcijaKorisnik> tim8projekcijakorisniks;
 
+	//bi-directional many-to-one association to Rezervacija
+	@OneToMany(mappedBy="tim8projekcija")
+	private List<Rezervacija> tim8rezervacijas;
+
 	public Projekcija() {
 	}
 
@@ -137,6 +141,28 @@ public class Projekcija implements Serializable {
 		tim8projekcijakorisnik.setTim8projekcija(null);
 
 		return tim8projekcijakorisnik;
+	}
+
+	public List<Rezervacija> getTim8rezervacijas() {
+		return this.tim8rezervacijas;
+	}
+
+	public void setTim8rezervacijas(List<Rezervacija> tim8rezervacijas) {
+		this.tim8rezervacijas = tim8rezervacijas;
+	}
+
+	public Rezervacija addTim8rezervacija(Rezervacija tim8rezervacija) {
+		getTim8rezervacijas().add(tim8rezervacija);
+		tim8rezervacija.setTim8projekcija(this);
+
+		return tim8rezervacija;
+	}
+
+	public Rezervacija removeTim8rezervacija(Rezervacija tim8rezervacija) {
+		getTim8rezervacijas().remove(tim8rezervacija);
+		tim8rezervacija.setTim8projekcija(null);
+
+		return tim8rezervacija;
 	}
 
 }

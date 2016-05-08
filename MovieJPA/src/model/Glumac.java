@@ -28,16 +28,7 @@ public class Glumac implements Serializable {
 	private String slikaGlumca;
 
 	//bi-directional many-to-many association to Film
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(
-		name="TIM8GLUMACFILM"
-		, joinColumns={
-			@JoinColumn(name="GlumacID")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="FilmID")
-			}
-		)
+	@ManyToMany(mappedBy="tim8glumacs")
 	private List<Film> tim8films;
 
 	public Glumac() {

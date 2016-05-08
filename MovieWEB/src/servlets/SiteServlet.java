@@ -68,6 +68,21 @@ public class SiteServlet extends HttpServlet {
 			request.getRequestDispatcher("/film.jsp").forward(request, response);
 		} else if(request.getParameter("zatvori")!=null){
 			request.getRequestDispatcher("/site.jsp").forward(request, response);
+		}else if(request.getParameter("reserve")!=null){
+			int brk = Integer.parseInt(request.getParameter("brojkarata"));
+			int idproj = Integer.parseInt(request.getParameter("idProjekcije"));
+			int idkor = 0;
+			try {
+				idkor = LGbean.getLoggedUser().getKorisnikID();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			if(idkor!=0){
+				if(LGbean.TryToInsertRezervacije(brk, idproj, idkor)){
+					request.getRequestDispatcher("/site.jsp").forward(request, response);
+				}
+			}
+			
 		}else if(request.getParameter("sacuvajO")!=null){
 			if(LGbean.getLoggedUser()!=null){
 				int ocena;
