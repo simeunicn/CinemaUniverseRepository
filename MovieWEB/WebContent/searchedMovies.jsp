@@ -13,6 +13,9 @@
 <title>Searched movies</title>
 </head>
 <body>
+<form action="SiteServlet" method="post">
+	<input type="submit" class="btn btn-danger" name="nazadProjekcije" value="Nazad"/>
+</form>
 <table class="table table-condensed">
 		<thead>
 			<tr>

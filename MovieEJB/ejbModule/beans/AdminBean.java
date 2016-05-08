@@ -93,11 +93,12 @@ public class AdminBean implements AdminBeanRemote {
     	}
     }
     
-    public void dodajGlumca(String ime, String prezime, String slika){
+    public void dodajGlumca(String ime, String prezime, String slika, String biografija){
 		Glumac g = new Glumac();
 		g.setIme(ime);
 		g.setPrezime(prezime);
 		g.setSlikaGlumca(slika);
+		g.setBiografija(biografija);
 		glumci.add(g);
     }
     

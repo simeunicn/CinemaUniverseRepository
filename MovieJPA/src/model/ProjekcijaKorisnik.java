@@ -20,6 +20,8 @@ public class ProjekcijaKorisnik implements Serializable {
 
 	private int ocena;
 
+	private int rezervisao;
+
 	//bi-directional many-to-one association to Korisnik
 	@ManyToOne
 	@JoinColumn(name="KorisnikID")
@@ -47,6 +49,14 @@ public class ProjekcijaKorisnik implements Serializable {
 
 	public void setOcena(int ocena) {
 		this.ocena = ocena;
+	}
+
+	public int getRezervisao() {
+		return this.rezervisao;
+	}
+
+	public void setRezervisao(int rezervisao) {
+		this.rezervisao = rezervisao;
 	}
 
 	public Korisnik getTim8korisnik() {

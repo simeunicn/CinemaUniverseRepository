@@ -42,6 +42,8 @@
 			<tr>
 				<th>Film</th>
 				<th>Sala</th>
+				<th>Tip projekcije</th>
+				<th>Cena karte</th>
 				<th>Vreme projekcije</th>
 				<th>Ukupno mesta</th>
 				<th>Preostalo mesta</th>
@@ -61,6 +63,12 @@
 	   		</td>
 	   		<td>
 	   			<c:out value="${p.sala}"/>	
+	   		</td>
+	   		<td>
+	   			<c:out value="${p.tipProjekcije}"/>	
+	   		</td>
+	   		<td>
+	   			<c:out value="${p.cena}"/>	
 	   		</td>
 	   		<td>
 	   			<c:out value="${p.vreme}"/>	

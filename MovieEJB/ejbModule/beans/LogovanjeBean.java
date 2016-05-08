@@ -31,7 +31,7 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 
 	@Resource
 	private SessionContext sc;
-	
+
 	private Korisnik loggedUser;
 
 	public LogovanjeBean() {
@@ -39,8 +39,8 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 	}
 
 	public String login(String username, String password) {
-		TypedQuery<Korisnik> tq = em.createQuery(
-				"select k from Korisnik k where k.username = :u and k.password = :p", Korisnik.class);
+		TypedQuery<Korisnik> tq = em.createQuery("select k from Korisnik k where k.username = :u and k.password = :p",
+				Korisnik.class);
 		tq.setParameter("u", username);
 		tq.setParameter("p", password);
 
@@ -54,8 +54,9 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 			return "nije-registrovan";
 		}
 	}
-	
-	public boolean registracija(String email, String imeKorisnika, String password, String prezimeKorisnika, String uloga, String username){
+
+	public boolean registracija(String email, String imeKorisnika, String password, String prezimeKorisnika,
+			String uloga, String username) {
 		try {
 			UserTransaction ut = sc.getUserTransaction();
 			ut.begin();
@@ -75,47 +76,39 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 			try {
 				sc.getUserTransaction().rollback();
 			} catch (IllegalStateException | SecurityException | SystemException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			return false;
 		}
 	}
-	public void sacuvajOcenu(int idkor, int idproj, int ocena){
-		TypedQuery<ProjekcijaKorisnik> tq = em.createQuery("select pk from ProjekcijaKorisnik pk where pk.tim8korisnik.korisnikID=:kid and pk.tim8projekcija.projekcijaID=:pid",ProjekcijaKorisnik.class);
+
+	public void sacuvajOcenu(int idkor, int idproj, int ocena) {
+		TypedQuery<ProjekcijaKorisnik> tq = em.createQuery(
+				"select pk from ProjekcijaKorisnik pk where pk.tim8korisnik.korisnikID=:kid and pk.tim8projekcija.projekcijaID=:pid",
+				ProjekcijaKorisnik.class);
 		tq.setParameter("kid", idkor);
 		tq.setParameter("pid", idproj);
-		
-		try{
+
+		try {
 			List<ProjekcijaKorisnik> lpk = tq.getResultList();
 			UserTransaction ut = sc.getUserTransaction();
 			ut.begin();
 			ProjekcijaKorisnik pk = new ProjekcijaKorisnik();
-			if(lpk.size()==0){
-				
-				Korisnik tim8korisnik = em.find(Korisnik.class,idkor);
+			if (lpk.size() == 0) {
+				Korisnik tim8korisnik = em.find(Korisnik.class, idkor);
 				Projekcija tim8projekcija = em.find(Projekcija.class, idproj);
 				pk.setTim8korisnik(tim8korisnik);
 				pk.setTim8projekcija(tim8projekcija);
 				pk.setOcena(ocena);
 				em.persist(pk);
-				
-				//
-			}else{
+			} else {
 				pk = lpk.get(0);
 				pk.setOcena(ocena);
 				em.merge(pk);
-				
 			}
 			ut.commit();
 			updateProsecneOcene(pk);
-			//em.getTransaction().commit();
-			//et.commit();
-//		}catch(NoResultException nre){
-//			nre.printStackTrace();
-//			
-		}catch(Exception e){
-			//em.getTransaction().rollback();
+		} catch (Exception e) {
 			try {
 				sc.getUserTransaction().rollback();
 			} catch (IllegalStateException e1) {
@@ -125,70 +118,66 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void updateProsecneOcene(ProjekcijaKorisnik pk) {
-		// TODO Auto-generated method stub
 		int count = getCountOcenjeneProjekcije(pk);
 		long sum = getSumuOcenaZaProjekciju(pk);
-		double d=0.0;
-		if(count!=0){
+		double d = 0.0;
+		if (count != 0) {
 			DecimalFormat df = new DecimalFormat("#.00");
-			d = ((double)sum)/((double)count);
+			d = ((double) sum) / ((double) count);
 			String ds = df.format(d);
 			d = Double.parseDouble(ds);
- 		}
+		}
 		Projekcija p = em.find(Projekcija.class, pk.getTim8projekcija().getProjekcijaID());
 		p.setProsecnaOcena(d);
 		UserTransaction ut = sc.getUserTransaction();
-		
+
 		try {
 			ut.begin();
 			em.merge(p);
 			ut.commit();
 		} catch (Exception e) {
-			// TODO: handle exception
 			try {
 				ut.rollback();
 			} catch (IllegalStateException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (SecurityException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (SystemException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			System.out.println("Greska u updateProsecneOcene");
 			e.printStackTrace();
 		}
-		
-	}
-	public List<Projekcija> getTopProjekcije(){
-		TypedQuery q = em.createQuery("select p from Projekcija p order by ProsecnaOcena desc",Projekcija.class);
-		return q.getResultList();
-	}
-	private long getSumuOcenaZaProjekciju(ProjekcijaKorisnik pk) {
-		// TODO Auto-generated method stub
-		Query tq = em.createQuery("select sum(ocena) from ProjekcijaKorisnik pk where pkid.tim8projekcija.projekcijaID=:par");
-		tq.setParameter("par", pk.getTim8projekcija().getProjekcijaID());
-		//System.out.println("broj ocena "+tq.getResultList().size());
-		return (long)tq.getSingleResult();
+
 	}
 
-	public int getCountOcenjeneProjekcije(ProjekcijaKorisnik pk){
-		TypedQuery<ProjekcijaKorisnik> tq = em.createQuery("select pk from ProjekcijaKorisnik pk where pkid.tim8projekcija.projekcijaID=:par",ProjekcijaKorisnik.class);
+	public List<Projekcija> getTopProjekcije() {
+		TypedQuery q = em.createQuery("select p from Projekcija p order by ProsecnaOcena desc", Projekcija.class);
+		return q.getResultList();
+	}
+
+	private long getSumuOcenaZaProjekciju(ProjekcijaKorisnik pk) {
+		Query tq = em.createQuery(
+				"select sum(ocena) from ProjekcijaKorisnik pk where pkid.tim8projekcija.projekcijaID=:par");
 		tq.setParameter("par", pk.getTim8projekcija().getProjekcijaID());
-		//System.out.println("koliko ima ocena "+tq.getResultList().size());
+		return (long) tq.getSingleResult();
+	}
+
+	public int getCountOcenjeneProjekcije(ProjekcijaKorisnik pk) {
+		TypedQuery<ProjekcijaKorisnik> tq = em.createQuery(
+				"select pk from ProjekcijaKorisnik pk where pkid.tim8projekcija.projekcijaID=:par",
+				ProjekcijaKorisnik.class);
+		tq.setParameter("par", pk.getTim8projekcija().getProjekcijaID());
 		return tq.getResultList().size();
 	}
-	
-	
-	public void justContinue(){
+
+	public void justContinue() {
 		loggedUser = null;
 	}
-	
-	public void logout(){
+
+	public void logout() {
 		loggedUser = null;
 	}
 

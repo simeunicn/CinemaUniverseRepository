@@ -19,6 +19,8 @@ public class Glumac implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int glumacID;
 
+	private String biografija;
+
 	private String ime;
 
 	private String prezime;
@@ -26,7 +28,16 @@ public class Glumac implements Serializable {
 	private String slikaGlumca;
 
 	//bi-directional many-to-many association to Film
-	@ManyToMany(mappedBy="tim8glumacs")
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(
+		name="TIM8GLUMACFILM"
+		, joinColumns={
+			@JoinColumn(name="GlumacID")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="FilmID")
+			}
+		)
 	private List<Film> tim8films;
 
 	public Glumac() {
@@ -38,6 +49,14 @@ public class Glumac implements Serializable {
 
 	public void setGlumacID(int glumacID) {
 		this.glumacID = glumacID;
+	}
+
+	public String getBiografija() {
+		return this.biografija;
+	}
+
+	public void setBiografija(String biografija) {
+		this.biografija = biografija;
 	}
 
 	public String getIme() {

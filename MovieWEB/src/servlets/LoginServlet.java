@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.FilmBean;
 import beans.LogovanjeBean;
 
 /**
@@ -20,6 +21,9 @@ public class LoginServlet extends HttpServlet {
 	
 	@EJB
 	LogovanjeBean bean;
+	
+	@EJB
+	FilmBean filmBean;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -47,8 +51,13 @@ public class LoginServlet extends HttpServlet {
 			}else{
 				String uloga = bean.login(username, password);
 				if(uloga.equals("nije-registrovan")){
+					bean.justContinue();
+					request.getSession().setAttribute("projekcije", filmBean.pronadjiSveProjekcije());
+					request.getSession().setAttribute("LGbean", bean);
+					request.getSession().setAttribute("nazivKomponente", "Logout");
 					request.getRequestDispatcher("/index.jsp").forward(request, response);
 				}else if (uloga.equals("korisnik")){
+					request.getSession().setAttribute("projekcije", filmBean.pronadjiSveProjekcije());
 					request.getSession().setAttribute("LGbean", bean);
 					request.getSession().setAttribute("nazivKomponente", "Logout");
 					request.getRequestDispatcher("/site.jsp").forward(request, response);
@@ -62,6 +71,7 @@ public class LoginServlet extends HttpServlet {
 			request.getRequestDispatcher("/registration.jsp").forward(request, response);
 		}else if(request.getParameter("continue")!=null){
 			bean.justContinue();
+			request.getSession().setAttribute("projekcije", filmBean.pronadjiSveProjekcije());
 			request.getSession().setAttribute("LGbean", bean);
 			request.getSession().setAttribute("nazivKomponente", "Nazad");
 			request.getRequestDispatcher("/site.jsp").forward(request, response);

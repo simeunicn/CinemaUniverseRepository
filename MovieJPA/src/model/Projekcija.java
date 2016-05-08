@@ -34,12 +34,12 @@ public class Projekcija implements Serializable {
 	private String vreme;
 
 	//bi-directional many-to-one association to Film
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="FilmID")
 	private Film tim8film;
 
 	//bi-directional many-to-one association to ProjekcijaKorisnik
-	@OneToMany(mappedBy="tim8projekcija",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="tim8projekcija")
 	private List<ProjekcijaKorisnik> tim8projekcijakorisniks;
 
 	public Projekcija() {

@@ -49,6 +49,9 @@ public class SiteServlet extends HttpServlet {
 		if(request.getParameter("logout")!=null){
 			request.getSession().setAttribute("projekcije", null);
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
+		}else if(request.getParameter("nazadProjekcije")!=null){
+			request.getSession().setAttribute("projekcije", bean.pronadjiSveProjekcije());
+			request.getRequestDispatcher("/site.jsp").forward(request, response);
 		}else if(request.getParameter("prikazinajbolje")!=null){
 			request.getSession().setAttribute("projekcije", LGbean.getTopProjekcije());
 			request.getRequestDispatcher("/site.jsp").forward(request, response);

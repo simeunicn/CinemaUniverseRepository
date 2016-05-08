@@ -69,6 +69,10 @@
 		            <label class="control-label">Slika</label>
 		            <input type="text" class="form-control" name="slika" placeholder="URL"></input>
 		          </div>
+		          <div class="form-group">
+		            <label class="control-label">Biografija</label>
+		            <input type="text" class="form-control" name="biografija" placeholder="Biografija"></input>
+		          </div>
 		          <div class="modal-footer">
 		        	<button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
 		        	<input type="submit" class="btn btn-success" name="sacuvajG" value="Sacuvaj" style="width: 150;" /></br>

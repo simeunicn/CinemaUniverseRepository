@@ -14,46 +14,74 @@
 </head>
 <body>
 <form action="SiteServlet" method="post">
-		      <div class="modal-body">
+		      <div class="modal-body" align="center">
 		      	  <div class="modal-footer">
 		        	<input type="submit" class="btn btn-danger" name="zatvori" value="Zatvori" style="width: 150;" /></br>
 		      	  </div>
 		      	  <div class="form-group">
 		          	<label class="label label-info">Slika</label><br /><br />
-	  				<img src="<c:out value="${film.slikaFilma}"/>" class="img-rounded" width="300" height="400"></img> <br />
+	  				<img src="<c:out value="${film.slikaFilma}"/>" class="img-rounded" width="30%" height="30%"></img> <br />
 		          </div>
-		          <div class="form-group">
+		          <div class="form-group" align="left">
 		            <label class="label label-info">Naziv</label>
 		            <label class="control-label"><c:out value="${film.naziv}"/></label>
 		          </div>
-		          <div class="form-group">
+		          <div class="form-group" align="left">
 		            <label class="label label-info">Opis</label>
 		            <label class="control-label"><c:out value="${film.opis}"/></label>
 		          </div>
-		          <div class="form-group">
+		          <div class="form-group" align="left">
 		            <label class="label label-info">Kategorija</label>
 		            <label class="control-label"><c:out value="${film.kategorija}"/></label>
 		          </div>
-		          <div class="form-group">
+		          <div class="form-group" align="left">
 		            <label class="label label-info">Glumci</label>
 		            <table class="table table-condensed">
 			      	  	<thead>
 						<tr>
-							<th>Ime</th>
-							<th>Prezime</th>
-							<th>Slika</th>
+							<th>
+								<div class="panel-body">
+    								<p>Ime</p>
+  								</div>
+							</th>
+							<th>
+								<div class="panel-body">
+    								<p>Prezime</p>
+  								</div>
+							</th>
+							<th>
+								<div class="panel-body">
+    								<p>Slika glumca</p>
+  								</div>
+							</th>
+							<th>
+								<div class="panel-body">
+    								<p>Biografija</p>
+  								</div>
+							</th>
 						</tr>
 						</thead>
 						<c:forEach var="g" items="${film.tim8glumacs}">
 	   					<tr>
 	   						<td>
-	   						<c:out value="${g.ime}"/>	
+	   							<div class="panel-body">
+    								<p><c:out value="${g.ime}"/></p>
+  								</div>
 	   						</td>
 	   						<td>
-	   						<c:out value="${g.prezime}"/>	
+	   							<div class="panel-body">
+    								<p><c:out value="${g.prezime}"/></p>
+  								</div>
 	   						</td>
 	   						<td>
-	   						<img src="<c:out value="${g.slikaGlumca}"/>	" class="img-rounded" width="100" height="120"></img> <br />
+	   							<div class="panel-body">
+    								<p><img src="<c:out value="${g.slikaGlumca}"/>	" class="img-rounded"></img></p>
+  								</div>
+	   						</td>
+	   						<td>
+	   							<div class="panel-body">
+    								<p><c:out value="${g.biografija}"/></p>
+  								</div>
 	   						</td>
 	   					</tr>
 						</c:forEach>
@@ -66,7 +94,7 @@
 		      	  	<table class="table table-condensed">
 			      	  	<thead>
 						<tr>
-							<th>Komentar</th>
+							<th>Komentari</th>
 							<th>Datum</th>
 						</tr>
 						</thead>

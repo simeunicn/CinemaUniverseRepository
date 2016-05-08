@@ -30,16 +30,7 @@ public class Film implements Serializable {
 	private String trailer;
 
 	//bi-directional many-to-many association to Glumac
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(
-		name="TIM8GLUMACFILM"
-		, joinColumns={
-			@JoinColumn(name="FilmID")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="GlumacID")
-			}
-		)
+	@ManyToMany(mappedBy="tim8films",fetch=FetchType.EAGER)
 	private List<Glumac> tim8glumacs;
 
 	//bi-directional many-to-one association to Komentar

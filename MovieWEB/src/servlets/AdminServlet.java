@@ -69,7 +69,8 @@ public class AdminServlet extends HttpServlet {
 			String ime = request.getParameter("ime");
 			String prezime = request.getParameter("prezime");
 			String slika = request.getParameter("slika");
-			bean.dodajGlumca(ime, prezime, slika);
+			String biografija = request.getParameter("biografija");
+			bean.dodajGlumca(ime, prezime, slika, biografija);
 			request.getRequestDispatcher("/adminPage.jsp").forward(request, response);
 			
 		}else if(request.getParameter("sacuvajP")!=null){
