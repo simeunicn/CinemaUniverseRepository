@@ -87,34 +87,32 @@ public class SiteServlet extends HttpServlet {
 
 		} else if (request.getParameter("reserve") != null) {
 
-			int brk = Integer.parseInt(request.getParameter("brojkarata"));
-			int idproj = Integer.parseInt(request.getParameter("idProjekcije"));
-			int idkor = 0;
 			try {
-				idkor = LGbean.getLoggedUser().getKorisnikID();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			if (idkor != 0) {
-				if (LGbean.TryToInsertRezervacije(brk, idproj, idkor)) {
-					request.getSession().setAttribute("projekcije", bean.pronadjiSveProjekcije());
-					request.getRequestDispatcher("/site.jsp").forward(request, response);
-				} else {
-					request.getSession().setAttribute("projekcije", bean.pronadjiSveProjekcije());
-					request.getRequestDispatcher("/site.jsp").forward(request, response);
+				int brk = Integer.parseInt(request.getParameter("brojkarata"));
+				int idproj = Integer.parseInt(request.getParameter("idProjekcije"));
+				int idkor = 0;
+				try {
+					idkor = LGbean.getLoggedUser().getKorisnikID();
+				} catch (Exception e) {
 				}
-			} else {
+				if (idkor != 0) {
+					LGbean.TryToInsertRezervacije(brk, idproj, idkor);
+				}
+			} catch (Exception e) {
+				// nije mogao da parsira
+			} finally {
 				request.getSession().setAttribute("projekcije", bean.pronadjiSveProjekcije());
 				request.getRequestDispatcher("/site.jsp").forward(request, response);
 			}
 
 		} else if (request.getParameter("prodaj") != null) {
-			int brk = Integer.parseInt(request.getParameter("brojkarata"));
-			int idproj = Integer.parseInt(request.getParameter("idProjekcije"));
-			if (bean.prodajKarte(brk, idproj)) {
-				request.getSession().setAttribute("projekcije", bean.pronadjiSveProjekcije());
-				request.getRequestDispatcher("/site.jsp").forward(request, response);
-			} else {
+			try {
+				int brk = Integer.parseInt(request.getParameter("brojkarata"));
+				int idproj = Integer.parseInt(request.getParameter("idProjekcije"));
+				bean.prodajKarte(brk, idproj);
+			} catch (Exception e) {
+				// nije mogao da parsira
+			} finally {
 				request.getSession().setAttribute("projekcije", bean.pronadjiSveProjekcije());
 				request.getRequestDispatcher("/site.jsp").forward(request, response);
 			}
@@ -146,12 +144,12 @@ public class SiteServlet extends HttpServlet {
 				request.getRequestDispatcher("/film.jsp").forward(request, response);
 			}
 
-		} else if (request.getParameter("filtriraj") != null){
+		} else if (request.getParameter("filtriraj") != null) {
 			String brojMesta = request.getParameter("brojMesta");
 			String cena = request.getParameter("cenaKarata");
 			request.getSession().setAttribute("projekcije", bean.filtrirajProjekcije(brojMesta, cena));
 			request.getRequestDispatcher("/site.jsp").forward(request, response);
-		} else{
+		} else {
 			request.getRequestDispatcher("/site.jsp").forward(request, response);
 		}
 
