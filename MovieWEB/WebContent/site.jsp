@@ -15,27 +15,33 @@
 <body>
 		<form action="SiteServlet" method="post">
 		<div class="row">
-  			<div class="col-lg-6">
+  			<div class="col-lg-4">
     			<div class="input-group">
     			<input type="submit" class="btn btn-danger" name="logout" value="${nazivKomponente}"/>
       				<span class="input-group-btn">
         			<input type="submit" class="btn btn-info" name="prikazi" value="Pregledaj sve"/>
+        			<span style="padding-left:20px">
       				<input type="submit" class="btn btn-info" name="prikazinajbolje" value="Pregledaj najbolje projekcije"/>
       				</span>
-    			</div><!-- /input-group -->
-  			</div><!-- /.col-lg-6 -->
-  			<div class="col-lg-6">
-    			<div class="input-group">
-      				<input type="text" class="form-control" placeholder="Pretrazi..." name="inputpretraga">
-      				<span class="input-group-btn">
-        				<input type="submit" class="btn btn-info" name="pretraga" value="Pretrazi"/>
       				</span>
     			</div><!-- /input-group -->
-  			</div><!-- /.col-lg-6 -->
-  			
+  			</div><!-- /.col-lg-4 -->
+  			<div class="col-lg-4">
+    			<div class="input-group">
+      				<input type="text" class="form-control" placeholder="Zanr..." name="inputpretraga">
+      				<span class="input-group-btn">
+        				<input type="submit" class="btn btn-info" name="pretraga" value="Pretrazi filmove"/>
+      				</span>
+    			</div><!-- /input-group -->
+  			</div><!-- /.col-lg-4 -->
 		</div><!-- /.row -->
-	
-		<br /><br /><br />
+		<br /><br />
+		<div>
+			<c:if test="${radnik}">
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#filter" data-whatever="@fat">Filtriraj projekcije</button>
+			</c:if>
+		</div>
+		<br />
 		</form>
 		<table class="table table-condensed">
 		<thead>
@@ -47,9 +53,16 @@
 				<th>Vreme projekcije</th>
 				<th>Ukupno mesta</th>
 				<th>Preostalo mesta</th>
-				<th>Ocena</th>
+				<c:if test="${registrovan}">
+					<th>Broj karata za rezervaciju</th>
+				</c:if>
+				<c:if test="${radnik}">
+					<th>Broj karata za prodaju</th>
+				</c:if>
 				<th>Prosecna ocena</th>
-				<th>Broj karata za rezervaciju</th>
+				<c:if test="${registrovan}">
+					<th>Ocena</th>
+				</c:if>
 				<th></th>
 				<th></th>
 				<th></th>
@@ -80,35 +93,44 @@
 	   		<td>
 	   			<c:out value="${p.preostalaMesta}"/>
 	   		</td>
+	   		<c:if test="${registrovan}">
+	   			<td>
+	   				<input type="text" name="brojkarata"/><input type="submit" class="btn btn-link" name="reserve" value="Rezervisi karte" style="width: 150;" />
+	   			</td>
+	   		</c:if>
+	   		<c:if test="${radnik}">
+	   			<td>
+	   				<input type="text" name="brojkarata"/><input type="submit" class="btn btn-link" name="prodaj" value="Prodaj karte" style="width: 150;" />
+	   			</td>
+	   		</c:if>
 	   		<td>
-	   			<input type="text" name="brojkarata"/><input type="submit" class="btn btn-link" name="reserve" value="Rezervisi" style="width: 150;" /> 
-	   		</td>
-	   		<td>
-	   			<div class="btn-group" data-toggle="buttons">
-  					<label class="btn btn-primary active">
-    					<input type="radio" name="ocena" id="option1" autocomplete="off" value="1">1
-  					</label>
-					<label class="btn btn-primary">
-					    <input type="radio" name="ocena" id="option2" autocomplete="off" value="2">2
-					</label>
-					<label class="btn btn-primary">
-					    <input type="radio" name="ocena" id="option3" autocomplete="off" value="3">3
-					</label>
-					<label class="btn btn-primary">
-					    <input type="radio" name="ocena" id="option3" autocomplete="off" value="4">4
-					</label>
-					<label class="btn btn-primary">
-					    <input type="radio" name="ocena" id="option3" autocomplete="off" value="5">5
-					</label>
-				</div>
-	   		</td>
-	   		<td>
-	   			<fmt:parseNumber var="i" type="number" value="${p.prosecnaOcena}" />
+   				<fmt:parseNumber var="i" type="number" value="${p.prosecnaOcena}" />
 				<p><c:out value="${p.prosecnaOcena}"/></p>
 	   		</td>
-	   		<td>
-	   			<input type="submit" class="btn btn-link" name="sacuvajO" value="Sacuvaj ocenu" style="width: 150;" /></br>
-	   		</td>
+	   		<c:if test="${registrovan}">
+	   			<td>
+   					<div class="btn-group" data-toggle="buttons">
+	  					<label class="btn btn-primary active">
+	    					<input type="radio" name="ocena" id="option1" autocomplete="off" value="1">1</input>
+	  					</label>
+						<label class="btn btn-primary">
+						    <input type="radio" name="ocena" id="option2" autocomplete="off" value="2">2</input>
+						</label>
+						<label class="btn btn-primary">
+						    <input type="radio" name="ocena" id="option3" autocomplete="off" value="3">3</input>
+						</label>
+						<label class="btn btn-primary">
+						    <input type="radio" name="ocena" id="option3" autocomplete="off" value="4">4</input>
+						</label>
+						<label class="btn btn-primary">
+						    <input type="radio" name="ocena" id="option3" autocomplete="off" value="5">5</input>
+						</label>
+					</div>
+	   			</td>
+	   			<td>
+	   				<input type="submit" class="btn btn-link" name="sacuvajO" value="Sacuvaj ocenu" style="width: 150;" /></br>
+	   			</td>
+	   		</c:if>
 	   		<td>
 		   		<input type="submit" class="btn btn-link" name="pogledajF" value="Detalji" style="width: 150;" /></br>
 	   		</td>
@@ -122,6 +144,37 @@
 	   	</form>
 		</c:forEach>
 		</table>
+	
+	
+	
+	
+	<form action="SiteServlet" method="post">
+		<div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="X"><span aria-hidden="true">&times;</span></button>
+		        <label class="control-label">Filter</label>
+		      </div>
+		      <div class="modal-body">
+		          <div class="form-group">
+		            <label class="control-label">Broj mesta vise od:</label>
+		            <input type="text" class="form-control" name="brojMesta" placeholder="Broj mesta..." value="Broj mesta..."></input>
+		          </div>
+		          <div class="form-group">
+		            <label class="control-label">Cena projekcije manje od:</label>
+		            <input type="text" class="form-control" name="cenaKarata" placeholder="Cena..." value="Cena..."></input>
+		          </div>
+		          <div class="modal-footer">
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+		        	<input type="submit" class="btn btn-success" name="filtriraj" value="Filtriraj" style="width: 150;" /></br>
+		      	</div>
+		      </div> 
+		    </div>
+		  </div>
+		 </div>
+	</form>
+	
 	
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.FilmBean;
 import beans.LogovanjeBean;
 
 /**
@@ -17,7 +18,10 @@ import beans.LogovanjeBean;
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
+	@EJB
+	FilmBean filmBean;
+	
 	@EJB
 	LogovanjeBean bean;
 	
@@ -51,6 +55,9 @@ public class RegisterServlet extends HttpServlet {
 				request.getRequestDispatcher("/registration.jsp").forward(request, response);
 			}else{
 				if(bean.registracija(email, ime, password, prezime, uloga, username)){
+					boolean registrovan = true;
+					request.getSession().setAttribute("registrovan", registrovan);
+					request.getSession().setAttribute("projekcije", filmBean.pronadjiSveProjekcije());
 					request.getSession().setAttribute("LGbean", bean);
 					request.getSession().setAttribute("nazivKomponente", "Logout");
 					request.getRequestDispatcher("/site.jsp").forward(request, response);

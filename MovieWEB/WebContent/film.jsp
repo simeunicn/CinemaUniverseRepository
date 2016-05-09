@@ -87,23 +87,25 @@
 						</c:forEach>
 					</table>
 		          </div>
-		          <div class="modal-footer">
-		          	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#komentar" data-whatever="@fat">Dodaj komentar</button>
+		          <div class="modal-footer" align="center">
+		          	<c:if test="${registrovan}">
+		          		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#komentar" data-whatever="@fat">Dodaj komentar</button>
+		          	</c:if>
 		      	  	<input type="hidden" name="idFilmaPK" value="<c:out value='${film.filmID}'/>"/>
 		      	  	<br />
-		      	  	<table class="table table-condensed">
-			      	  	<thead>
-						<tr>
-							<th>Komentari</th>
-							<th>Datum</th>
+		      	  	<table class="table table-condensed" align="center">
+			      	  	<thead align="center">
+						<tr align="center">
+							<th align="center">Komentari</th>
+							<th align="center">Datum</th>
 						</tr>
 						</thead>
 						<c:forEach var="k" items="${film.tim8komentars}">
-	   					<tr>
-	   						<td>
+	   					<tr align="center">
+	   						<td align="center">
 	   						<c:out value="${k.textKomentara}"/>	
 	   						</td>
-	   						<td>
+	   						<td align="center">
 	   						<c:out value="${k.datumPostavljanja}"/>	
 	   						</td>
 	   					</tr>

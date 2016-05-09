@@ -182,7 +182,7 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 		return false;
 	}
 	
-	private boolean insertRezervacije(int num,Projekcija proj, Korisnik kor){
+	private boolean insertRezervacije(int num, Projekcija proj, Korisnik kor){
 		UserTransaction ut = sc.getUserTransaction();
 		try {
 			ut.begin();
@@ -214,6 +214,7 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 			return false;
 		}
 	}
+	
 	public void justContinue() {
 		loggedUser = null;
 	}

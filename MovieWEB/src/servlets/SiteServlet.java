@@ -19,56 +19,74 @@ import beans.LogovanjeBean;
 @WebServlet("/SiteServlet")
 public class SiteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	@EJB
 	FilmBean bean;
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SiteServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public SiteServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		LogovanjeBean LGbean = (LogovanjeBean) request.getSession().getAttribute("LGbean");
 		String kat = request.getParameter("inputpretraga");
-		//System.err.println("SERVLET VREDNOST KATEGORIJE: "+kat);
-		if(request.getParameter("logout")!=null){
+		if (request.getParameter("logout") != null) {
+
 			request.getSession().setAttribute("projekcije", null);
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
-		}else if(request.getParameter("nazadProjekcije")!=null){
+
+		} else if (request.getParameter("nazadProjekcije") != null) {
+
 			request.getSession().setAttribute("projekcije", bean.pronadjiSveProjekcije());
 			request.getRequestDispatcher("/site.jsp").forward(request, response);
-		}else if(request.getParameter("prikazinajbolje")!=null){
+
+		} else if (request.getParameter("prikazinajbolje") != null) {
+
 			request.getSession().setAttribute("projekcije", LGbean.getTopProjekcije());
 			request.getRequestDispatcher("/site.jsp").forward(request, response);
-		} else if(request.getParameter("prikazi")!=null){
+
+		} else if (request.getParameter("prikazi") != null) {
+
 			request.getSession().setAttribute("projekcije", bean.pronadjiSveProjekcije());
 			request.getRequestDispatcher("/site.jsp").forward(request, response);
-		} else if(request.getParameter("pretraga")!=null){
-			//neka pretraga
+
+		} else if (request.getParameter("pretraga") != null) {
+
+			// neka pretraga
 			request.getSession().setAttribute("filmovi", bean.pretragaPoKategoriji(kat));
 			request.getRequestDispatcher("/searchedMovies.jsp").forward(request, response);
-		} else if(request.getParameter("pogledajF")!=null){
+
+		} else if (request.getParameter("pogledajF") != null) {
+
 			int id = Integer.parseInt(request.getParameter("idFilma"));
 			request.getSession().setAttribute("film", bean.pronadjiFilm(id));
 			request.getRequestDispatcher("/film.jsp").forward(request, response);
-		} else if(request.getParameter("zatvori")!=null){
+
+		} else if (request.getParameter("zatvori") != null) {
+
 			request.getRequestDispatcher("/site.jsp").forward(request, response);
-		}else if(request.getParameter("reserve")!=null){
+
+		} else if (request.getParameter("reserve") != null) {
+
 			int brk = Integer.parseInt(request.getParameter("brojkarata"));
 			int idproj = Integer.parseInt(request.getParameter("idProjekcije"));
 			int idkor = 0;
@@ -77,18 +95,36 @@ public class SiteServlet extends HttpServlet {
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
-			if(idkor!=0){
-				if(LGbean.TryToInsertRezervacije(brk, idproj, idkor)){
+			if (idkor != 0) {
+				if (LGbean.TryToInsertRezervacije(brk, idproj, idkor)) {
+					request.getSession().setAttribute("projekcije", bean.pronadjiSveProjekcije());
+					request.getRequestDispatcher("/site.jsp").forward(request, response);
+				} else {
+					request.getSession().setAttribute("projekcije", bean.pronadjiSveProjekcije());
 					request.getRequestDispatcher("/site.jsp").forward(request, response);
 				}
+			} else {
+				request.getSession().setAttribute("projekcije", bean.pronadjiSveProjekcije());
+				request.getRequestDispatcher("/site.jsp").forward(request, response);
 			}
-			
-		}else if(request.getParameter("sacuvajO")!=null){
-			if(LGbean.getLoggedUser()!=null){
+
+		} else if (request.getParameter("prodaj") != null) {
+			int brk = Integer.parseInt(request.getParameter("brojkarata"));
+			int idproj = Integer.parseInt(request.getParameter("idProjekcije"));
+			if (bean.prodajKarte(brk, idproj)) {
+				request.getSession().setAttribute("projekcije", bean.pronadjiSveProjekcije());
+				request.getRequestDispatcher("/site.jsp").forward(request, response);
+			} else {
+				request.getSession().setAttribute("projekcije", bean.pronadjiSveProjekcije());
+				request.getRequestDispatcher("/site.jsp").forward(request, response);
+			}
+		} else if (request.getParameter("sacuvajO") != null) {
+
+			if (LGbean.getLoggedUser() != null) {
 				int ocena;
-				try{
+				try {
 					ocena = Integer.parseInt(request.getParameter("ocena"));
-				}catch(NumberFormatException nfe){
+				} catch (NumberFormatException nfe) {
 					ocena = 1;
 				}
 				int idproj = Integer.parseInt(request.getParameter("idProjekcije"));
@@ -97,19 +133,28 @@ public class SiteServlet extends HttpServlet {
 			}
 			request.getSession().setAttribute("projekcije", bean.pronadjiSveProjekcije());
 			request.getRequestDispatcher("/site.jsp").forward(request, response);
-		}else if(request.getParameter("sacuvajK")!=null){
-			if(LGbean.getLoggedUser()!=null && LGbean!=null){
+
+		} else if (request.getParameter("sacuvajK") != null) {
+
+			if (LGbean.getLoggedUser() != null && LGbean != null) {
 				String tekst = request.getParameter("textKomentara");
 				String datum = request.getParameter("datumKomentara");
-				request.getSession().setAttribute("film", bean.dodajKomentar(tekst, datum, LGbean.getLoggedUser().getKorisnikID(), Integer.parseInt(request.getParameter("idFilmaK"))));
+				request.getSession().setAttribute("film", bean.dodajKomentar(tekst, datum,
+						LGbean.getLoggedUser().getKorisnikID(), Integer.parseInt(request.getParameter("idFilmaK"))));
 				request.getRequestDispatcher("/film.jsp").forward(request, response);
-			}else{
+			} else {
 				request.getRequestDispatcher("/film.jsp").forward(request, response);
 			}
+
+		} else if (request.getParameter("filtriraj") != null){
+			String brojMesta = request.getParameter("brojMesta");
+			String cena = request.getParameter("cenaKarata");
+			request.getSession().setAttribute("projekcije", bean.filtrirajProjekcije(brojMesta, cena));
+			request.getRequestDispatcher("/site.jsp").forward(request, response);
 		} else{
 			request.getRequestDispatcher("/site.jsp").forward(request, response);
 		}
-		
+
 	}
 
 }
