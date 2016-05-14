@@ -1,6 +1,9 @@
 package beans;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -82,14 +85,13 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 		}
 	}
 
-	public void sacuvajOcenu(int idkor, int idproj, int ocena) {
-		TypedQuery<ProjekcijaKorisnik> tq = em.createQuery(
-				"select pk from ProjekcijaKorisnik pk where pk.tim8korisnik.korisnikID=:kid and pk.tim8projekcija.projekcijaID=:pid",
-				ProjekcijaKorisnik.class);
-		tq.setParameter("kid", idkor);
-		tq.setParameter("pid", idproj);
-
+	public boolean sacuvajOcenu(int idkor, int idproj, int ocena) {
 		try {
+			TypedQuery<ProjekcijaKorisnik> tq = em.createQuery(
+					"select pk from ProjekcijaKorisnik pk where pk.tim8korisnik.korisnikID=:kid and pk.tim8projekcija.projekcijaID=:pid",
+					ProjekcijaKorisnik.class);
+			tq.setParameter("kid", idkor);
+			tq.setParameter("pid", idproj);
 			List<ProjekcijaKorisnik> lpk = tq.getResultList();
 			UserTransaction ut = sc.getUserTransaction();
 			ut.begin();
@@ -108,6 +110,7 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 			}
 			ut.commit();
 			updateProsecneOcene(pk);
+			return true;
 		} catch (Exception e) {
 			try {
 				sc.getUserTransaction().rollback();
@@ -116,6 +119,7 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 			} catch (SystemException e1) {
 			}
 			e.printStackTrace();
+			return false;
 		}
 	}
 
@@ -154,8 +158,9 @@ public class LogovanjeBean implements LogovanjeBeanRemote {
 	}
 
 	public List<Projekcija> getTopProjekcije() {
-		TypedQuery q = em.createQuery("select p from Projekcija p order by ProsecnaOcena desc", Projekcija.class);
-		return q.getResultList();
+		TypedQuery<Projekcija> q = em.createQuery("select p from Projekcija p order by ProsecnaOcena desc ", Projekcija.class);
+		List<Projekcija> projekcije = q.getResultList();
+		return projekcije;
 	}
 
 	private long getSumuOcenaZaProjekciju(ProjekcijaKorisnik pk) {

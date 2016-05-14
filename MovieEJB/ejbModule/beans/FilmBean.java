@@ -158,7 +158,7 @@ public class FilmBean implements FilmBeanRemote {
 	public List<Film> pretragaPoKategoriji(String kat) {
 		TypedQuery<Film> q = em.createQuery("select f from Film f where f.kategorija LIKE :kat", Film.class);
 		// System.out.println("BEAN KAT:"+kat);
-		q.setParameter("kat", kat);
+		q.setParameter("kat", "%"+kat+"%");
 		return q.getResultList();
 	}
 

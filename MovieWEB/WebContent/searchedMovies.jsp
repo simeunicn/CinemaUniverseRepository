@@ -14,8 +14,16 @@
 </head>
 <body>
 <form action="SiteServlet" method="post">
-	<input type="submit" class="btn btn-danger" name="nazadProjekcije" value="Nazad"/>
+	<div class="row">
+  			<div class="col-lg-4">
+    			<div class="input-group">
+    				<input type="submit" class="btn btn-danger" name="nazadProjekcije" value="Nazad"/>
+    			</div><!-- /input-group -->
+  			</div><!-- /.col-lg-4 -->
+		</div><!-- /.row -->
+		<br /><br />
 </form>
+<br /><br />
 <table class="table table-condensed">
 		<thead>
 			<tr>
@@ -40,7 +48,7 @@
 	   			<c:out value="${p.kategorija}"/>	
 	   		</td>
 	   		<td>
-		   		<input type="submit" class="btn btn-link" name="pogledajF" value="Detalji" style="width: 150;" /></br>
+		   		<input type="submit" class="btn btn-info" name="pogledajF" value="Detalji" style="width: 150;" /></br>
 	   		</td>
 	   		<td>
 	   			<input type="hidden" id="idFilma" name="idFilma" value="${p.filmID}" style="width: 150;" /></br>

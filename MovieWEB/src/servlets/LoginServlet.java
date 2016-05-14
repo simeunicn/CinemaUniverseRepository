@@ -47,25 +47,20 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		request.getSession().setAttribute("poruka", "");
 		boolean registrovan = false;
 		boolean radnik = false;
 		if (request.getParameter("login") != null) {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			if (username.equals("") || password.equals("")) {
+				request.getSession().setAttribute("poruka", "Molimo vas unesite username i password!");
 				request.getRequestDispatcher("/index.jsp").forward(request, response);
 			} else {
 				String uloga = bean.login(username, password);
 				if (uloga.equals("nije-registrovan")) {
 					bean.justContinue();
-					registrovan = false;
-					radnik = false;
-					request.getSession().setAttribute("registrovan", registrovan);
-					request.getSession().setAttribute("radnik", radnik);
-					request.getSession().setAttribute("projekcije", filmBean.pronadjiSveProjekcije());
-					request.getSession().setAttribute("LGbean", bean);
-					request.getSession().setAttribute("nazivKomponente", "Logout");
+					request.getSession().setAttribute("poruka", "Pogresan username ili password! Molimo vas pokusajte ponovo!");
 					request.getRequestDispatcher("/index.jsp").forward(request, response);
 				} else if (uloga.equals("korisnik")) {
 					registrovan = true;
@@ -75,6 +70,7 @@ public class LoginServlet extends HttpServlet {
 					request.getSession().setAttribute("projekcije", filmBean.pronadjiSveProjekcije());
 					request.getSession().setAttribute("LGbean", bean);
 					request.getSession().setAttribute("nazivKomponente", "Logout");
+					request.getSession().setAttribute("poruka", "Zdravo "+bean.getLoggedUser().getImeKorisnika()+" ");
 					request.getRequestDispatcher("/site.jsp").forward(request, response);
 				} else if (uloga.equals("admin")) {
 					request.getRequestDispatcher("/adminPage.jsp").forward(request, response);
@@ -104,6 +100,7 @@ public class LoginServlet extends HttpServlet {
 			request.getSession().setAttribute("nazivKomponente", "Nazad");
 			request.getRequestDispatcher("/site.jsp").forward(request, response);
 		} else {
+			request.getSession().setAttribute("poruka", "Izvinjavamo se, doslo je do greske! Molimo vas pokusajte ponovo!");
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
 	}

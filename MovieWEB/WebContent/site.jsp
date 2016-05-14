@@ -17,31 +17,55 @@
 		<div class="row">
   			<div class="col-lg-4">
     			<div class="input-group">
-    			<input type="submit" class="btn btn-danger" name="logout" value="${nazivKomponente}"/>
-      				<span class="input-group-btn">
-        			<input type="submit" class="btn btn-info" name="prikazi" value="Pregledaj sve"/>
-        			<span style="padding-left:20px">
-      				<input type="submit" class="btn btn-info" name="prikazinajbolje" value="Pregledaj najbolje projekcije"/>
-      				</span>
-      				</span>
-    			</div><!-- /input-group -->
-  			</div><!-- /.col-lg-4 -->
-  			<div class="col-lg-4">
-    			<div class="input-group">
-      				<input type="text" class="form-control" placeholder="Zanr..." name="inputpretraga">
-      				<span class="input-group-btn">
-        				<input type="submit" class="btn btn-info" name="pretraga" value="Pretrazi filmove"/>
-      				</span>
+    				<input type="submit" class="btn btn-danger" name="logout" value="${nazivKomponente}"/>
     			</div><!-- /input-group -->
   			</div><!-- /.col-lg-4 -->
 		</div><!-- /.row -->
 		<br /><br />
-		<div>
-			<c:if test="${radnik}">
-					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#filter" data-whatever="@fat">Filtriraj projekcije</button>
-			</c:if>
+		
+		
+		<div align="center" >
+			<div class="input-group" style="width: 500px;" >
+    			<input type="text" class="form-control" placeholder="Zanr..." name="inputpretraga"/>
+    			<div class="input-group-btn">
+        			<input type="submit" class="btn btn-info" name="pretraga" value="Pretrazi filmove"/>
+        		</div>
+  			</div>
 		</div>
-		<br />
+		<br /><br />
+		
+		<div align="center" >
+			<div class="input-group" style="width: 500px;" >
+    			<div class="form-group">
+    				<h3><span class="label label-warning">${poruka}</span></h3>
+  				</div>
+  			</div>
+		</div>
+		<br /><br />
+		
+		
+		<div class="btn-group">
+  			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 150px;" > Filteri <span class="caret"></span></button>
+			<ul class="dropdown-menu" style="width: 250px;" >
+				<li>
+					<a href="#"><input type="submit" class="btn btn-info" name="prikazi" value="Pregledaj sve projekcije" style="width: 220px;"/></a>
+				</li>
+				<li>
+					<a href="#">
+						<input type="submit" class="btn btn-info" name="prikazinajbolje" value="Pregledaj najbolje projekcije" style="width: 220px;"/>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<c:if test="${radnik}">
+								<button type="button" class="btn btn-info" data-toggle="modal" data-target="#filter" data-whatever="@fat" style="width: 220px;">Ostali filteri</button>
+						</c:if>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<br /><br />
+		
 		</form>
 		<table class="table table-condensed">
 		<thead>
@@ -94,13 +118,13 @@
 	   			<c:out value="${p.preostalaMesta}"/>
 	   		</td>
 	   		<c:if test="${registrovan}">
-	   			<td>
-	   				<input type="text" name="brojkarata"/><input type="submit" class="btn btn-link" name="reserve" value="Rezervisi karte" style="width: 150;" />
+	   			<td border: 1px>
+	   				<input type="text" name="brojkarata"/><input type="submit" class="btn btn-warning" name="reserve" value="Rezervisi karte" style="margin-left: 20px;"/>
 	   			</td>
 	   		</c:if>
 	   		<c:if test="${radnik}">
 	   			<td>
-	   				<input type="text" name="brojkarata"/><input type="submit" class="btn btn-link" name="prodaj" value="Prodaj karte" style="width: 150;" />
+	   				<input type="text" name="brojkarata"/><input type="submit" class="btn btn-warning" name="prodaj" value="Prodaj karte" style="margin-left: 20px;"/>
 	   			</td>
 	   		</c:if>
 	   		<td>
@@ -128,11 +152,11 @@
 					</div>
 	   			</td>
 	   			<td>
-	   				<input type="submit" class="btn btn-link" name="sacuvajO" value="Sacuvaj ocenu" style="width: 150;" /></br>
+	   				<input type="submit" class="btn btn-warning" name="sacuvajO" value="Sacuvaj ocenu" style="width: 150;" /></br>
 	   			</td>
 	   		</c:if>
 	   		<td>
-		   		<input type="submit" class="btn btn-link" name="pogledajF" value="Detalji" style="width: 150;" /></br>
+		   		<input type="submit" class="btn btn-info" name="pogledajF" value="Detalji" style="width: 150;" /></br>
 	   		</td>
 	   		<td>
 	   			<input type="hidden" id="idProjekcije" name="idProjekcije" value="${p.projekcijaID}" style="width: 150;" /></br>

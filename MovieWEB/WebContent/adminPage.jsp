@@ -14,12 +14,23 @@
 </head>
 <body>
 <form action="AdminServlet" method="post">
-<br /><br />
-<div class="well" id="film">
+
+	<br /><br />
+		<div align="center" >
+			<div class="input-group" style="width: 500px;" >
+    			<div class="form-group">
+    				<h3><span class="label label-warning">${poruka}</span></h3>
+  				</div>
+  			</div>
+		</div>
+	<br /><br />
+
+<div id="film">
 	<div align="center" >
 		<div>
 			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#glumci" data-whatever="@fat">Dodaj glumca</button>
-			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#projekcije" data-whatever="@fat">Dodaj projekciju</button>
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#projekcije" data-whatever="@fat" style="margin-left: 20px;">Dodaj projekciju</button>
+			<br /><br /><br />
 		</div>
 		<div class="form-group">
     		<label for="exampleInputEmail1">Naziv</label>
@@ -37,13 +48,13 @@
     		<label for="exampleInputEmail1">Slika</label>
     		<input type="text" class="form-control" name="slika" placeholder="URL"></input>
   		</div>
-  		<div class="form-group">
-    		<label for="exampleInputEmail1">Trailer</label>
-    		<input type="text" class="form-control" name="trailer" placeholder="URL"></input>
-  		</div>
   		<div>
-			<input type="submit" class="btn btn-success" name="sacuvajF" value="Sacuvaj" style="width: 150px;" /> </br>
-			<input type="submit" class="btn btn-danger" name="logout" value="Logout" style="width: 150px;" /> </br>
+  			<div class="form-group" style="width: 300px;" >
+		    	<input type="submit" class="btn btn-success" name="sacuvajF" value="Sacuvaj" style="width: 150px;" /> </br>
+		  	</div>
+		  	<div class="form-group" style="width: 300px;" >
+		    	<input type="submit" class="btn btn-danger" name="logout" value="Logout" style="width: 150px;" /> </br>
+		  	</div>
 		</div>
 	</div>
 </div>
@@ -113,7 +124,7 @@
 		          </div>
 		           <div class="form-group">
 		            <label class="control-label">Datum i vreme</label>
-		            <input type="text" class="form-control" name="datum" placeholder="00/00/00-00:00"></input>
+		            <input type="text" class="form-control" name="datum" placeholder="Example: 26/07/2016 20:00"></input>
 		          </div>
 		          <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>

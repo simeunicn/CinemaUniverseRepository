@@ -13,7 +13,17 @@
 </head>
 <body>
 	<form action="RegisterServlet" method="post">
-	<br /><br /><br /><br />
+	
+	<br /><br />
+		<div align="center" >
+			<div class="input-group" style="width: 500px;" >
+    			<div class="form-group">
+    				<h3><span class="label label-warning">${poruka}</span></h3>
+  				</div>
+  			</div>
+		</div>
+	<br /><br />
+	
 	<div align="center" >
 		<div class="form-group">
     		<label for="exampleInputEmail1">Username</label>
@@ -36,8 +46,12 @@
     		<input type="text" class="form-control" name="email" placeholder="Email">
   		</div>
   		<div>
-			<input type="submit" class="btn btn-success" name="register" value="Registracija" style="width: 150;" /></br> 
-			<input type="submit" class="btn btn-danger" name="cancel" value="Odustani" style="width: 150;" /></br>
+  			<div class="form-group" style="width: 300px;" >
+		    	<input type="submit" class="btn btn-success" name="register" value="Registracija" style="width: 150;" /></br> 
+		  	</div>
+		  	<div class="form-group" style="width: 300px;" >
+		    	<input type="submit" class="btn btn-danger" name="cancel" value="Odustani" style="width: 150;" /></br>
+		  	</div>
 		</div>
 	</div>
 	</form>

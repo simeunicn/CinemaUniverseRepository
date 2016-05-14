@@ -12,5 +12,5 @@ public interface LogovanjeBeanRemote {
 	public void logout();
 	public Korisnik getLoggedUser();
 	public void setLoggedUser(Korisnik loggedUser);
-	public void sacuvajOcenu(int idkor, int idproj, int ocena);
+	public boolean sacuvajOcenu(int idkor, int idproj, int ocena);
 }

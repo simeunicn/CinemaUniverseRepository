@@ -15,6 +15,9 @@
 	<form action="LoginServlet" method="post">
 	<br /><br /><br /><br /><br />
 		<div align="center" >
+			<div class="form-group">
+    			<h3><span class="label label-warning">${poruka}</span></h3>
+  			</div>
 			<div class="form-group" style="width: 300px;" >
     			<label class="sr-only" for="exampleInputEmail3">Username</label>
    				<input type="text" class="form-control" name="username" placeholder="Username"></input>
@@ -23,11 +26,15 @@
 		    	<label class="sr-only" for="exampleInputPassword3">Password</label>
 		    	<input type="password" class="form-control" name="password" placeholder="Password"></input>
 		  	</div>
-		  	<div>
-				<input type="submit" class="btn btn-primary" name="login" value="Login" style="width: 150px;" /> </br> 
-				<input type="submit" class="btn btn-info" name="register" value="Registracija" style="width: 150;" /></br> 
-				<input type="submit" class="btn btn-link" name="continue" value="Nastavi" style="width: 150;" /></br>
+		  	<div class="form-group" style="width: 300px;" >
+				<input type="submit" class="btn btn-primary" name="login" value="Login"  style="width: 300px;"/>
 			</div>
+			<div class="form-group" style="width: 300px;" >
+		    	<input type="submit" class="btn btn-info" name="register" value="Registracija" style="width: 300px;"/>
+		  	</div>
+		  	<div class="form-group" style="width: 300px;" >
+		    	<input type="submit" class="btn btn-warning" name="continue" value="Nastavi"  style="width: 300px;"/>
+		  	</div>
 		</div>
 	</form>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
