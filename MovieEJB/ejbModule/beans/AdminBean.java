@@ -140,4 +140,32 @@ public class AdminBean implements AdminBeanRemote {
 		}
 	}
 
+	public int getPrihod(String odv, String dov) {
+		// TODO Auto-generated method stub
+		try{
+			TypedQuery<Projekcija> tq = em.createQuery("SELECT p From Projekcija p WHERE STRCMP(p.vreme,:odv)>0 AND STRCMP(p.vreme,:dov)<0",Projekcija.class);
+			tq.setParameter("dov", dov);
+			tq.setParameter("odv", odv);
+			List<Projekcija> lista = tq.getResultList();
+			if(!lista.isEmpty()){
+				return sumirajProfit(lista);
+			}else{
+				System.out.println("Prazna lista prihod je 0");
+				return 0;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	private int sumirajProfit(List<Projekcija> lista) {
+		// TODO Auto-generated method stub
+		int suma = 0;
+		for(Projekcija p:lista){
+			suma += (p.getUkupanbrmesta()-p.getPreostalaMesta())*p.getCena();
+		}
+		return suma;
+	}
+
 }

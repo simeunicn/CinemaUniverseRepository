@@ -12,4 +12,5 @@ public interface AdminBeanRemote {
 	public boolean dodajGlumca(String ime, String prezime, String slika, String biografija);
 	public boolean dodajProjekciju(String sala, String ukupanbrmesta, String preostalaMesta, String cena, String tipProjekcije, String datum);
 	public List<Film> pronadjiSve();
+	public int getPrihod(String odv, String dov);
 }

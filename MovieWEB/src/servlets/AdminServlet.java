@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.AdminBean;
+import beans.AdminBeanRemote;
 
 /**
  * Servlet implementation class AdminServlet
@@ -49,12 +50,13 @@ public class AdminServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		AdminBean bean = (AdminBean) request.getSession().getAttribute("bean");
+		AdminBeanRemote bean = (AdminBeanRemote) request.getSession().getAttribute("bean");
 		request.getSession().setAttribute("poruka", "");
+		request.getSession().setAttribute("prihod", "");
 		if (bean == null) {
 			try {
-				bean = (AdminBean) new InitialContext()
-						.lookup("java:global/MovieEAR/MovieEJB/AdminBean!beans.AdminBean");
+				bean = (AdminBeanRemote) new InitialContext()
+						.lookup("java:global/MoviesEAR/MoviesEJB/AdminBean!beans.AdminBeanRemote");
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}
@@ -101,7 +103,12 @@ public class AdminServlet extends HttpServlet {
 		} else if (request.getParameter("logout") != null) {
 			request.getSession().setAttribute("poruka", "");
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
-
+		} else if (request.getParameter("izracunaj")!=null) {
+			String odv = request.getParameter("od");
+			String dov = request.getParameter("do");
+			int prihod = bean.getPrihod(odv,dov);
+			request.setAttribute("poruka", "Prihod je: "+prihod);
+			request.getRequestDispatcher("/adminPage.jsp").forward(request, response);
 		} else {
 			request.getSession().setAttribute("poruka", "Doslo je do greske! Pokusajte ponovo!");
 			request.getRequestDispatcher("/adminPage.jsp").forward(request, response);

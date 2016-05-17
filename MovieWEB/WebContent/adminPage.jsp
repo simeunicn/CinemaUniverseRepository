@@ -30,6 +30,7 @@
 		<div>
 			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#glumci" data-whatever="@fat">Dodaj glumca</button>
 			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#projekcije" data-whatever="@fat" style="margin-left: 20px;">Dodaj projekciju</button>
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#profit" data-whatever="@fat" style="margin-left: 20px;">Pogledaj profit</button>
 			<br /><br /><br />
 		</div>
 		<div class="form-group">
@@ -87,6 +88,33 @@
 		          <div class="modal-footer">
 		        	<button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
 		        	<input type="submit" class="btn btn-success" name="sacuvajG" value="Sacuvaj" style="width: 150;" /></br>
+		      	</div>
+		      </div> 
+		    </div>
+		  </div>
+		 </div>
+</form>
+<form action="AdminServlet" method="post">
+		<div class="modal fade" id="profit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="X"><span aria-hidden="true">&times;</span></button>
+		        <label class="control-label">Profit za period</label>
+		      </div>
+		      <div class="modal-body">
+		          <div class="form-group">
+		            <label class="control-label">Od:</label>
+		            <input type="text" class="form-control" name="od" placeholder="Datum oblika dd/mm/yyyy hh:mm"></input>
+		          </div>
+		          <div class="form-group">
+		            <label class="control-label">Do:</label>
+		            <input type="text" class="form-control" name="do" placeholder="Datum oblika dd/mm/yyyy hh:mm"></input>
+		          </div>
+		          <div class="modal-footer">
+		          	${prihod}
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+		        	<input type="submit" class="btn btn-success" name="izracunaj" value="Izracunaj" style="width: 150;" /></br>
 		      	</div>
 		      </div> 
 		    </div>
